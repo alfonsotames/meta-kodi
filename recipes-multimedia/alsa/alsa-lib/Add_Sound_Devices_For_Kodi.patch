@@ -1,0 +1,116 @@
+diff -rupN a/src/conf/cards/aliases.conf b/src/conf/cards/aliases.conf
+--- a/src/conf/cards/aliases.conf	2015-02-09 22:34:20.734106348 -0600
++++ b/src/conf/cards/aliases.conf	2015-02-09 22:38:09.878106320 -0600
+@@ -56,7 +56,8 @@ AV200 cards.CMI8788
+ CMI8786 cards.CMI8788
+ CMI8787 cards.CMI8788
+ cs42888-audio cards.CS42888
+-imx-hdmi-soc cards.IMX-HDMI
++#Commented for support in Kodi (added imx-hdmi-soc.conf and imx-spdif.conf instead)
++#imx-hdmi-soc cards.IMX-HDMI
+ 
+ <confdir:pcm/default.conf>
+ <confdir:pcm/dmix.conf>
+diff -rupN a/src/conf/cards/imx-hdmi-soc.conf b/src/conf/cards/imx-hdmi-soc.conf
+--- a/src/conf/cards/imx-hdmi-soc.conf	1969-12-31 18:00:00.000000000 -0600
++++ b/src/conf/cards/imx-hdmi-soc.conf	2015-02-09 22:39:13.258106313 -0600
+@@ -0,0 +1,33 @@
++#
++# Configuration for iMX6 HDMI output - /usr/share/alsa/cards/imx-hdmi-soc.conf
++# Taken from https://github.com/OpenBricks/openbricks/blob/master/packages/sound/alsa-lib/config/imx-hdmi-soc.conf
++#
++
++<confdir:pcm/hdmi.conf>
++
++imx-hdmi-soc.pcm.hdmi.0 {
++	@args [ CARD AES0 AES1 AES2 AES3 ]
++	@args.CARD { type string }
++	@args.AES0 { type integer }
++	@args.AES1 { type integer }
++	@args.AES2 { type integer }
++	@args.AES3 { type integer }
++	type hooks
++	slave.pcm {
++		type hw
++		card $CARD
++	}
++	hooks.0 {
++		type ctl_elems
++		hook_args [
++			{
++				interface MIXER
++				name "IEC958 Playback Default"
++				lock true
++				preserve true
++				optional true
++				value [ $AES0 $AES1 $AES2 $AES3 ]
++			}
++		]
++	}
++}
+diff -rupN a/src/conf/cards/imx-spdif.conf b/src/conf/cards/imx-spdif.conf
+--- a/src/conf/cards/imx-spdif.conf	1969-12-31 18:00:00.000000000 -0600
++++ b/src/conf/cards/imx-spdif.conf	2015-02-09 22:39:19.302106312 -0600
+@@ -0,0 +1,34 @@
++#
++# Configuration for iMX6 SPDIF output - /usr/share/alsa/cards/imx-spdif.conf
++# Taken from https://github.com/OpenBricks/openbricks/blob/master/packages/sound/alsa-lib/config/imx-spdif.conf
++#
++
++<confdir:pcm/iec958.conf>
++
++imx-spdif.pcm.iec958.0 {
++	@args [ CARD AES0 AES1 AES2 AES3 ]
++	@args.CARD { type string }
++	@args.AES0 { type integer }
++	@args.AES1 { type integer }
++	@args.AES2 { type integer }
++	@args.AES3 { type integer }
++	type hooks
++	slave.pcm {
++		type hw
++		card $CARD
++	}
++	hooks.0 {
++		type ctl_elems
++		hook_args [
++			{
++				interface MIXER
++				name "IEC958 Playback Default"
++				lock true
++				preserve true
++				optional true
++				value [ $AES0 $AES1 $AES2 $AES3 ]
++			}
++		]
++	}
++}
++
+diff -rupN a/src/conf/cards/Makefile.am b/src/conf/cards/Makefile.am
+--- a/src/conf/cards/Makefile.am	2015-02-09 22:34:20.734106348 -0600
++++ b/src/conf/cards/Makefile.am	2015-02-09 22:43:54.954106279 -0600
+@@ -57,7 +57,9 @@ cfg_files = aliases.conf \
+ 	VXPocket.conf \
+ 	VXPocket440.conf \
+ 	CS42888.conf \
+-	IMX-HDMI.conf
++	IMX-HDMI.conf \
++	imx-hdmi-soc.conf \
++	imx-spdif.conf
+ 
+ if BUILD_ALISP
+ cfg_files += aliases.alisp
+diff: a/include/alsa: recursive directory loop
+diff -rupN a/src/conf/cards/Makefile.in b/src/conf/cards/Makefile.in
+--- a/src/conf/cards/Makefile.in	2015-02-09 23:02:13.012990984 -0600
++++ b/src/conf/cards/Makefile.in	2015-02-09 23:05:16.896990963 -0600
+@@ -254,7 +254,8 @@ cfg_files = aliases.conf AACI.conf ATIIX
+ 	RME9636.conf RME9652.conf SI7018.conf SB-XFi.conf \
+ 	TRID4DWAVENX.conf USB-Audio.conf YMF744.conf VIA686A.conf \
+ 	VIA8233.conf VIA8233A.conf VIA8237.conf VX222.conf \
+-	VXPocket.conf VXPocket440.conf $(am__append_1)
++	VXPocket.conf VXPocket440.conf \
++	imx-hdmi-soc.conf imx-spdif.conf IMX-HDMI.conf $(am__append_1)
+ alsa_DATA = $(cfg_files)
+ @BUILD_ALISP_TRUE@SI7018dir = $(alsaconfigdir)/cards/SI7018
+ @BUILD_ALISP_FALSE@SI7018_files =
