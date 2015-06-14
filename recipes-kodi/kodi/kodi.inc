@@ -136,6 +136,7 @@ do_configure() {
 
 do_compile() {
    cd ${S}
+   make -C tools/depends/native/JsonSchemaBuilder
    make -j 8 BUILDDIR=${BUILDDIR} DESTDIR=${D}
 }
 
