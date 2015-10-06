@@ -47,6 +47,7 @@ DEPENDS = " \
 	libmodplug \
 	yajl \
 	libtinyxml \
+	libtinyxml-native \
 	libcdio \
         jasper \
 	libssh \
@@ -69,6 +70,7 @@ DEPENDS = " \
 	cairo pango fontconfig freetype \
 	ffmpeg-kodi \
 	libcec-imx \
+	libsquish \
 "
 
 DEPENDS_append_mx6 = " virtual/kernel virtual/libgles2 virtual/egl "
@@ -77,7 +79,7 @@ DEPENDS_append_mx6 = " virtual/kernel virtual/libgles2 virtual/egl "
 
 
 INC_PR = "r1"
-SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Helix"
+SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Isengard"
 
 
 S = "${WORKDIR}/git/"
@@ -87,15 +89,11 @@ EXTRA_OECONF=" --disable-debug \
 	--build=${BUILD_SYS} \
 	--host=${HOST_SYS} \
 	--target=${TARGET_SYS} ${@append_libtool_sysroot(d)} \
-	--disable-rpath \
 	--prefix=/imx6/xbmc \
 	--disable-pulse \
 	--disable-projectm \
 	--disable-x11 \
-	--disable-sdl \
 	--disable-libcec \
-	--disable-tiff \
-	--disable-xrandr \
 	--disable-gl \
 	--disable-vdpau \
 	--disable-vaapi \
@@ -110,7 +108,7 @@ EXTRA_OECONF=" --disable-debug \
 	--enable-avahi \
 	--disable-mid \
 	--enable-rsxs \
-	--enable-libcec \
+	--disable-libcec \
 	LIBS=' -llzma '"
 
 CXXFLAGS += " -I${STAGING_KERNEL_DIR}/include/uapi -I${STAGING_KERNEL_DIR}/include "
@@ -123,6 +121,10 @@ EXTRA_OEMAKE = "'BUILDDIR=${S}/build'"
 
 
 do_configure() {
+   export TINYXML_CFLAGS="-I/${STAGING_INCDIR}"
+   export TINYXML_LIBS="-L${STAGING_LIBDIR} -ltinyxml"
+   export SQUISH_CFLAGS="-I/${STAGING_INCDIR}"
+   export SQUISH_LIBS="-L${STAGING_LIBDIR} -lsquish"
    export PYTHON_EXTRA_LDFLAGS=""
    export PYTHON_EXTRA_LIBS="-lz"
    export PYTHON_VERSION="${PYTHON_BASEVERSION}"
@@ -136,7 +138,7 @@ do_configure() {
 
 do_compile() {
    cd ${S}
-   make -C tools/depends/native/JsonSchemaBuilder
+#  make -C tools/depends/native/JsonSchemaBuilder
    make -j 8 BUILDDIR=${BUILDDIR} DESTDIR=${D}
 }
 

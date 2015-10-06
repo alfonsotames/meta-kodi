@@ -4,18 +4,18 @@ DEPENDS += " zlib "
 
 LICENSE = "GPLv2"
 
-LIC_FILES_CHKSUM = "file://LICENSE.md;md5=af4fe319be2972a4fa475030d294cf1f"
+LIC_FILES_CHKSUM = "file://LICENSE.md;md5=4e0e4c9534db149e6b733ea75e421da7"
 
 PR = "r0"
 
 inherit autotools pkgconfig
 
-SRC_URI = "https://github.com/xbmc/FFmpeg/archive/2.4.4-Helix.tar.gz"
+SRC_URI = "https://github.com/xbmc/FFmpeg/archive/2.6.4-Isengard.tar.gz"
 
-SRC_URI[md5sum] = "19b5d29ef6b5a6fc202c652fe3905d9b"
-SRC_URI[sha256sum] = "cbaac116254004f993a0c62bb77e13745c9ac00960f2a0ef088baf09b0ad73de"
+SRC_URI[md5sum] = "3dbd015fbfea2cbedf1fbd0779ab987e"
+SRC_URI[sha256sum] = "2487a6d4ad5701ad22582fc064ce39b60c383eec4958ca1e3218379035fa523f"
 
-S = "${WORKDIR}/FFmpeg-2.4.4-Helix/"
+S = "${WORKDIR}/FFmpeg-2.6.4-Isengard/"
 
 EXTRA_OECONF = " \
 	--prefix=${prefix} \
