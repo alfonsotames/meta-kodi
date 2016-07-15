@@ -39,8 +39,7 @@ IMAGE_INSTALL += " \
 	python-textutils \
 	python-sqlite3 \
 	python-pickle \
-	python-logging \
-	python-elementtree \
+	python-logging \	
 	python-curses \
 	python-compile \
 	python-compiler \
@@ -66,10 +65,13 @@ IMAGE_INSTALL += " \
 	glibc-gconv-ibm850 \
 	glibc-gconv-cp1252 \
 	glibc-gconv-utf-32 \
-	alsa-tools alsa-state alsa-utils-alsaconf fsl-alsa-plugins \
+	alsa-tools alsa-state fsl-alsa-plugins \
 	pulseaudio \
 	transmission \
 "
+
+# fails in kogroth: python-elementtree
+
 ENABLE_BINARY_LOCALE_GENERATION = "1"
 
 export IMAGE_BASENAME = "kodi-image"

@@ -11,14 +11,21 @@ SRCREV = "a9b44adc6c9d7ae74e23392a83995ba59b436950"
 
 S = "${WORKDIR}/git"
 
-do_install() {
-   cd ${S}
-   mkdir ${D}/lib
-   mkdir ${D}/lib/pkgconfig
-   mkdir ${D}/include
-   export INSTALL_DIR=${D}
-   make install
+do_compile() {
+	PREFIX=/usr make -C ${S}
 }
 
+do_install() {
+	install -d ${D}/usr/include
+	install -d ${D}/usr/lib/pkgconfig
+	install -m 644 ${S}/*.h ${D}/usr/include
+	install -m 644 ${S}/libsquish.a ${D}/usr/lib
+	install -m 644 ${S}/squish.pc ${D}/usr/lib/pkgconfig
+}
+
+do_package_qa() {
+}
+
+FILES_${PN} = "/"
 
 

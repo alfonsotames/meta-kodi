@@ -7,8 +7,11 @@ PR = "r0"
 inherit autotools pkgconfig
 
 SRC_URI = "git://github.com/juhovh/shairplay.git"
-SRCREV="64d59e3087f829006d091fa0d114efb50972a2bf"
+SRCREV="ce80e005908f41d0e6fde1c4a21e9cb8ee54007b"
 S = "${WORKDIR}/git"
 
 
 FILES_${PN} += "${libdir}/*.so"
+
+
+

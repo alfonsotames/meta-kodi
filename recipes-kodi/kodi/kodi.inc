@@ -3,6 +3,7 @@
 DESCRIPTION = "Kodi - Media player and entertainment hub"
 LICENSE = "GPLv2"
 
+
 LIC_FILES_CHKSUM = "file://LICENSE.GPL;md5=930e2a5f63425d8dd72dbd7391c43c46"
 
 DEPENDS = " \
@@ -14,7 +15,6 @@ DEPENDS = " \
 	python-sqlite3 \
 	python-pickle \
 	python-logging \
-	python-elementtree \
 	python-curses \
 	python-compile \
 	python-compiler \
@@ -71,6 +71,8 @@ DEPENDS = " \
 	ffmpeg-kodi \
 	libcec-imx \
 	libsquish \
+	libdcadec \
+        libcrossguid \
 "
 
 DEPENDS_append_mx6 = " virtual/kernel virtual/libgles2 virtual/egl "
@@ -79,7 +81,7 @@ DEPENDS_append_mx6 = " virtual/kernel virtual/libgles2 virtual/egl "
 
 
 INC_PR = "r1"
-SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Isengard"
+SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Jarvis"
 
 
 S = "${WORKDIR}/git/"
@@ -102,13 +104,12 @@ EXTRA_OECONF=" --disable-debug \
 	--enable-udev \
 	--enable-codec=imxvpu \
 	--disable-texturepacker \
-	--enable-airplay \
+	--disable-airplay \
 	--enable-airtunes \
 	--enable-optimizations \
 	--enable-avahi \
 	--disable-mid \
 	--enable-rsxs \
-	--disable-libcec \
 	LIBS=' -llzma '"
 
 CXXFLAGS += " -I${STAGING_KERNEL_DIR}/include/uapi -I${STAGING_KERNEL_DIR}/include "
