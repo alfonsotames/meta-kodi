@@ -10,6 +10,9 @@ DEPENDS = " \
 	libfslvpuwrap \
 	alsa-lib \
 	python \
+	python-contextlib \
+	python-crypt \
+	python-mime \
 	python-distutils \
 	python-textutils \
 	python-sqlite3 \
@@ -36,6 +39,7 @@ DEPENDS = " \
 	python-pkgutil \
 	python-pycairo \
 	python-mako \
+	python-urllib3 \
 	mpeg2dec \
 	boost \
 	cmake \
