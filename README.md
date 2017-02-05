@@ -2,4 +2,6 @@
 
 This is a Kodi Yocto layer for Freescale's i.MX6 family of ARM processors. It has been tested in Wandboard (Yocto Fido and kernel 3.14.28). There are some rough edges that can easily be tweaked. Help is welcomed.
 
+ffmpeg-kodi tarball releases are here: https://github.com/xbmc/FFmpeg/releases
+
 If having problemas with JsonSchemaBuilder, compile it natively and install it in /usr/local/bin
